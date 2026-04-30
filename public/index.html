@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Doce Sabor — Sorveteria Artesanal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="/" class="navbar-logo"><span class="logo-icon">🍦</span> Doce Sabor</a>
+    <ul class="navbar-links">
+      <li><a href="/" class="active">Início</a></li>
+      <li><a href="/cardapio.html">Cardápio</a></li>
+      <li><a href="#como-pedir">Como Pedir</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <a href="/carrinho.html" class="cart-btn" id="cartBtn">
+        🛒 Carrinho
+        <span class="cart-count" id="cartCount" style="display:none">0</span>
+      </a>
+      <div id="authButtons" style="display:flex;gap:8px">
+        <a href="/login.html"    class="btn btn-outline btn-sm">Entrar</a>
+        <a href="/cadastro.html" class="btn btn-primary btn-sm">Cadastrar</a>
+      </div>
+      <div id="userMenu" style="display:none;align-items:center;gap:8px">
+        <a href="/pedidos.html" class="btn btn-ghost btn-sm">📦 Pedidos</a>
+        <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+      </div>
+      <button class="hamburger" onclick="toggleMobileMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">🏠 Início</a>
+  <a href="/cardapio.html">🍨 Cardápio</a>
+  <a href="/carrinho.html">🛒 Carrinho</a>
+  <a href="/pedidos.html">📦 Meus Pedidos</a>
+  <a href="/login.html">🔑 Entrar</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-content">
+    <div class="hero-badge">🌟 Sorveteria Artesanal desde 2018</div>
+    <h1>Sabores que fazem<br>o dia mais <span class="highlight">doce</span></h1>
+    <p>Sorvetes artesanais, açaí puro da Amazônia e milkshakes cremosos.<br>
+       Feitos com amor e ingredientes selecionados para você.</p>
+    <div class="hero-btns">
+      <a href="/cardapio.html" class="btn btn-accent btn-lg">Ver Cardápio 🍨</a>
+      <a href="#como-pedir"    class="btn btn-lg" style="border:2px solid rgba(255,255,255,.5);color:white;background:transparent">Como Pedir</a>
+    </div>
+  </div>
+  <div class="hero-visual">🍦</div>
+</section>
+
+<!-- DESTAQUES -->
+<section class="section" style="background:var(--primary-lighter)">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">Nossas <span class="text-primary">Especialidades</span></h2>
+      <p class="section-subtitle">Os sabores mais pedidos pelos nossos clientes</p>
+    </div>
+    <div class="products-grid" id="featuredProducts">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+    <div class="text-center" style="margin-top:40px">
+      <a href="/cardapio.html" class="btn btn-primary btn-lg">Ver Cardápio Completo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIAS -->
+<section class="section">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">Explore o <span class="text-primary">Cardápio</span></h2>
+      <p class="section-subtitle">Diversas opções para todos os gostos</p>
+    </div>
+    <div id="categoriesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO PEDIR -->
+<section class="section" id="como-pedir" style="background:var(--primary-lighter)">
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">Como <span class="text-primary">Pedir</span></h2>
+      <p class="section-subtitle">Simples e rápido em 3 passos</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <span class="step-icon">🔍</span>
+        <h3>Escolha no Cardápio</h3>
+        <p>Navegue pelas categorias e selecione seus sabores favoritos</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <span class="step-icon">🛒</span>
+        <h3>Monte seu Carrinho</h3>
+        <p>Adicione os produtos e ajuste as quantidades</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <span class="step-icon">🚀</span>
+        <h3>Confirme o Pedido</h3>
+        <p>Informe seu endereço, escolha o pagamento e pronto!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section" id="sobre">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+      <div style="font-size:7rem;text-align:center">🍧</div>
+      <div>
+        <div class="badge badge-primary" style="margin-bottom:16px">Sobre Nós</div>
+        <h2 class="section-title">Uma história feita <span class="text-primary">com amor</span></h2>
+        <p style="color:var(--gray);margin:16px 0;line-height:1.8">
+          A Doce Sabor nasceu do sonho de oferecer sorvetes artesanais de qualidade,
+          feitos com ingredientes selecionados e muito carinho em cada detalhe.
+        </p>
+        <p style="color:var(--gray);margin-bottom:28px;line-height:1.8">
+          Desde 2018 adoçando a vida dos nossos clientes com receitas exclusivas,
+          açaí puro da Amazônia e os melhores milkshakes da região.
+        </p>
+        <div style="display:flex;gap:32px">
+          <div><div style="font-size:2rem;font-weight:800;color:var(--primary)">500+</div><div style="font-size:.8rem;color:var(--gray)">Sabores criados</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--primary)">10k+</div><div style="font-size:.8rem;color:var(--gray)">Clientes felizes</div></div>
+          <div><div style="font-size:2rem;font-weight:800;color:var(--primary)">5⭐</div><div style="font-size:.8rem;color:var(--gray)">Avaliação média</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>🍦 Doce Sabor</h3>
+        <p>Sorveteria artesanal com os melhores sabores da cidade. Feito com amor, servido com carinho.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/">Início</a></li>
+          <li><a href="/cardapio.html">Cardápio</a></li>
+          <li><a href="/carrinho.html">Carrinho</a></li>
+          <li><a href="/pedidos.html">Meus Pedidos</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Conta</h4>
+        <ul>
+          <li><a href="/login.html">Entrar</a></li>
+          <li><a href="/cadastro.html">Cadastrar</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="#">📍 Rua das Flores, 123</a></li>
+          <li><a href="#">📞 (11) 99999-9999</a></li>
+          <li><a href="#">✉️ contato@docesabor.com</a></li>
+          <li><a href="#">⏰ Seg-Dom: 10h às 22h</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 Doce Sabor. Todos os direitos reservados.</span>
+      <span>Feito com 💜 e muito sorvete</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

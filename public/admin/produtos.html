@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Produtos — Admin Doce Sabor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="/" class="navbar-logo"><span class="logo-icon">🍦</span> Doce Sabor</a>
+    <div class="navbar-actions">
+      <span style="font-size:.85rem;color:var(--gray)">🔑 Admin: <strong id="userName"></strong></span>
+      <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+    </div>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-top">
+      <h2>⚙️ Painel Admin</h2>
+      <p>Gerencie sua sorveteria</p>
+    </div>
+    <a href="/admin/index.html"    class="admin-nav-item"><span class="icon">📊</span> Dashboard</a>
+    <a href="/admin/produtos.html" class="admin-nav-item active"><span class="icon">🍨</span> Produtos</a>
+    <a href="/admin/pedidos.html"  class="admin-nav-item"><span class="icon">📦</span> Pedidos</a>
+    <a href="/"                    class="admin-nav-item"><span class="icon">🌐</span> Ver Site</a>
+  </aside>
+
+  <main class="admin-content">
+    <div class="admin-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h1>🍨 Produtos</h1>
+        <p>Gerencie o cardápio da sua sorveteria</p>
+      </div>
+      <button class="btn btn-primary" onclick="openCreateModal()">+ Novo Produto</button>
+    </div>
+
+    <div class="table-wrapper">
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Emoji</th>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Preço</th>
+              <th>Status</th>
+              <th>Destaque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="produtosTbody">
+            <tr><td colspan="7" style="text-align:center;padding:40px"><div class="spinner" style="margin:0 auto"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL PRODUTO -->
+<div class="modal-overlay" id="produtoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalTitle">Novo Produto</h3>
+      <button class="modal-close" onclick="closeModal('produtoModal')">✕</button>
+    </div>
+    <form id="produtoForm">
+      <input type="hidden" id="produtoId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nome *</label>
+          <input type="text" id="pNome" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Preço (R$) *</label>
+          <input type="number" id="pPreco" class="form-control" step="0.01" min="0" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descrição</label>
+        <textarea id="pDesc" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <select id="pCategoria" class="form-control">
+            <option value="">Sem categoria</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Emoji</label>
+          <input type="text" id="pEmoji" class="form-control" value="🍨" maxlength="4">
+        </div>
+      </div>
+      <div style="display:flex;gap:24px;margin-bottom:20px">
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input type="checkbox" id="pDisponivel" checked style="width:16px;height:16px">
+          <span class="form-label" style="margin:0">Disponível</span>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+          <input type="checkbox" id="pDestaque" style="width:16px;height:16px">
+          <span class="form-label" style="margin:0">⭐ Destaque</span>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Salvar Produto</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

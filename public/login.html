@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Entrar — Doce Sabor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="/" class="navbar-logo"><span class="logo-icon">🍦</span> Doce Sabor</a>
+    <div class="navbar-actions">
+      <a href="/cardapio.html" class="btn btn-ghost btn-sm">← Voltar ao Cardápio</a>
+    </div>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="icon">🍦</span>
+      <h2>Bem-vindo de volta!</h2>
+      <p>Entre na sua conta para fazer pedidos</p>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" placeholder="seu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Senha</label>
+        <input type="password" id="senha" class="form-control" placeholder="••••••••" required>
+      </div>
+      <div id="errorMsg" style="display:none;color:var(--danger);font-size:.85rem;margin-bottom:12px;padding:10px;background:#FEE2E2;border-radius:8px"></div>
+      <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+        Entrar
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      Não tem conta? <a href="/cadastro.html">Cadastre-se grátis</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  if (Auth.isLoggedIn()) window.location.href = '/';
+});
+
+document.getElementById('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('errorMsg');
+  btn.disabled    = true;
+  btn.textContent = 'Entrando...';
+  err.style.display = 'none';
+
+  try {
+    const res = await API.post('/auth/login', {
+      email: document.getElementById('email').value,
+      senha: document.getElementById('senha').value
+    });
+    Auth.login(res.token, res.usuario);
+    showToast('Login realizado! Redirecionando...', 'success');
+
+    const redir = res.usuario.role === 'admin' ? '/admin/index.html' : '/';
+    setTimeout(() => window.location.href = redir, 1000);
+  } catch (e) {
+    err.textContent   = e.message;
+    err.style.display = 'block';
+    btn.disabled      = false;
+    btn.textContent   = 'Entrar';
+  }
+});
+</script>
+</body>
+</html>
