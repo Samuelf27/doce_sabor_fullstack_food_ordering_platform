@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Admin Dashboard — Doce Sabor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="/" class="navbar-logo"><span class="logo-icon">🍦</span> Doce Sabor</a>
+    <div class="navbar-actions">
+      <span style="font-size:.85rem;color:var(--gray)">🔑 Admin: <strong id="userName"></strong></span>
+      <a href="/" class="btn btn-ghost btn-sm">Ver Site</a>
+      <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+    </div>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-top">
+      <h2>⚙️ Painel Admin</h2>
+      <p>Gerencie sua sorveteria</p>
+    </div>
+    <a href="/admin/index.html"   class="admin-nav-item active"><span class="icon">📊</span> Dashboard</a>
+    <a href="/admin/produtos.html" class="admin-nav-item"><span class="icon">🍨</span> Produtos</a>
+    <a href="/admin/pedidos.html"  class="admin-nav-item"><span class="icon">📦</span> Pedidos</a>
+    <a href="/"                    class="admin-nav-item" style="margin-top:auto"><span class="icon">🌐</span> Ver Site</a>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="admin-content">
+    <div class="admin-header">
+      <h1>📊 Dashboard</h1>
+      <p>Visão geral da sua sorveteria</p>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon purple">📦</div>
+        <div class="stat-info">
+          <h3 id="statPedidos">—</h3>
+          <p>Total de Pedidos</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pink">👥</div>
+        <div class="stat-info">
+          <h3 id="statUsuarios">—</h3>
+          <p>Clientes</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">🍨</div>
+        <div class="stat-info">
+          <h3 id="statProdutos">—</h3>
+          <p>Produtos Ativos</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon blue">💰</div>
+        <div class="stat-info">
+          <h3 id="statReceita">—</h3>
+          <p>Receita Total</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEDIDOS RECENTES -->
+    <div class="table-wrapper">
+      <div class="table-header">
+        <h3>📋 Pedidos Recentes</h3>
+        <a href="/admin/pedidos.html" class="btn btn-primary btn-sm">Ver Todos</a>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Data</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody id="recentOrdersTbody">
+            <tr><td colspan="6" style="text-align:center;padding:40px"><div class="spinner" style="margin:0 auto"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
