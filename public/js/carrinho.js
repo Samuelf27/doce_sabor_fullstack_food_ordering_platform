@@ -1,4 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => renderCart());
+let cupomAtivo = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
+  document.getElementById('cupomInput')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') aplicarCupom();
+  });
+});
 
 function renderCart() {
   const items   = Cart.getItems();
@@ -7,6 +14,7 @@ function renderCart() {
   if (!list) return;
 
   if (!items.length) {
+    cupomAtivo = null;
     list.innerHTML = `
       <div class="cart-empty">
         <span class="icon">🛒</span>
@@ -41,15 +49,14 @@ function renderCart() {
 }
 
 function updateSummary() {
-  const items    = Cart.getItems();
   const subtotal = Cart.getTotal();
   const entrega  = subtotal > 0 ? 5 : 0;
-  const total    = subtotal + entrega;
+  const desconto = cupomAtivo ? Math.min(cupomAtivo.desconto, subtotal) : 0;
+  const total    = subtotal - desconto + entrega;
 
   document.getElementById('subtotal')?.replaceWith(
     Object.assign(document.createElement('span'), { id:'subtotal', textContent: formatCurrency(subtotal) })
   );
-
   const elSub  = document.getElementById('subtotal');
   const elFret = document.getElementById('frete');
   const elTot  = document.getElementById('totalFinal');
@@ -59,8 +66,63 @@ function updateSummary() {
   if (elFret) elFret.textContent = entrega > 0 ? formatCurrency(entrega) : 'Grátis';
   if (elTot)  elTot.textContent  = formatCurrency(total);
   if (elQty)  elQty.textContent  = Cart.getCount();
+
+  const descontoRow = document.getElementById('descontoRow');
+  if (descontoRow) {
+    if (cupomAtivo && desconto > 0) {
+      descontoRow.style.display = 'flex';
+      document.getElementById('cupomCodigo').textContent  = `(${cupomAtivo.codigo})`;
+      document.getElementById('descontoValor').textContent = `− ${formatCurrency(desconto)}`;
+    } else {
+      descontoRow.style.display = 'none';
+    }
+  }
 }
 
-function changeQty(id, qty) { Cart.setQty(id, qty); renderCart(); }
-function removeItem(id)     { Cart.remove(id); renderCart(); showToast('Item removido.', 'warning'); }
-function clearCart()        { if(confirm('Limpar todo o carrinho?')) { Cart.clear(); renderCart(); } }
+async function aplicarCupom() {
+  const input  = document.getElementById('cupomInput');
+  const msgEl  = document.getElementById('cupomMsg');
+  const codigo = input?.value.trim().toUpperCase();
+  if (!codigo) return;
+
+  const subtotal = Cart.getTotal();
+
+  msgEl.style.display = 'block';
+  msgEl.style.color   = 'var(--gray)';
+  msgEl.textContent   = 'Validando...';
+
+  try {
+    const res = await API.post('/cupons/validar', { codigo, subtotal });
+    cupomAtivo          = res;
+    msgEl.style.color   = 'var(--success)';
+    msgEl.textContent   = `✅ Cupom "${res.codigo}" aplicado! ${
+      res.tipo === 'percentual' ? `${res.valor}% de desconto` : `R$ ${res.valor.toFixed(2)} de desconto`
+    }`;
+    updateSummary();
+  } catch (err) {
+    cupomAtivo          = null;
+    msgEl.style.color   = 'var(--danger)';
+    msgEl.textContent   = `❌ ${err.message}`;
+    updateSummary();
+  }
+}
+
+function changeQty(id, qty) {
+  if (qty <= 0) { Cart.remove(id); }
+  else          { Cart.setQty(id, qty); }
+  renderCart();
+}
+
+function removeItem(id) {
+  Cart.remove(id);
+  renderCart();
+  showToast('Item removido.', 'warning');
+}
+
+function clearCart() {
+  if (confirm('Limpar todo o carrinho?')) {
+    Cart.clear();
+    cupomAtivo = null;
+    renderCart();
+  }
+}

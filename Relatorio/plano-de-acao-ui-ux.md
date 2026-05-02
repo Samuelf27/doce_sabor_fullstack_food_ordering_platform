@@ -2,9 +2,9 @@
 ## Doce Sabor · Sorveteria Online
 
 **Criado em:** 02/05/2026
-**Última atualização:** 02/05/2026 (sessão 2)
+**Última atualização:** 02/05/2026 (sessão 3)
 **Responsável:** Samuel Ferreira
-**Status geral:** 🟡 Em andamento (10 de 19 concluídos)
+**Status geral:** 🟡 Em andamento (14 de 19 concluídos)
 
 ---
 
@@ -22,8 +22,8 @@
 |------|------|-------|--------|
 | 1 | Estrutura e Navegação | 3 | 🟢 Concluída |
 | 2 | Cardápio e Produtos | 4 | 🟢 Concluída |
-| 3 | Carrinho e Checkout | 4 | 🟡 Parcial (3/4) |
-| 4 | Mobile e Performance | 3 | 🔴 |
+| 3 | Carrinho e Checkout | 4 | 🟢 Concluída |
+| 4 | Mobile e Performance | 3 | 🟢 Concluída |
 | 5 | Funcionalidades Extras | 5 | 🔴 |
 
 **Total de melhorias:** 19
@@ -591,11 +591,11 @@ Os produtos são exibidos sempre na mesma ordem (destaques primeiro, depois alfa
 | F2-04 | Indicador de scroll nas abas | 🟡 Médio | Pequeno | 🟢 02/05 |
 | F3-01 | Botões de quantidade maiores | 🟠 Alto | Pequeno | 🟢 02/05 |
 | F3-02 | Stepper de progresso no checkout | 🟠 Alto | Médio | 🟢 02/05 |
-| F3-03 | Campo de endereço com CEP | 🟡 Médio | Médio | 🔴 |
+| F3-03 | Campo de endereço com CEP | 🟡 Médio | Médio | 🟢 02/05 |
 | F3-04 | Comunicar frete e prazo de entrega | 🟡 Médio | Pequeno | 🟢 02/05 |
-| F4-01 | Carrinho fixo no rodapé em mobile | 🟠 Alto | Pequeno | 🔴 |
-| F4-02 | Skeleton loader nos cards | 🟡 Médio | Pequeno | 🔴 |
-| F4-03 | Lazy loading de produtos | 🟡 Médio | Médio | 🔴 |
+| F4-01 | Carrinho fixo no rodapé em mobile | 🟠 Alto | Pequeno | 🟢 02/05 |
+| F4-02 | Skeleton loader nos cards | 🟡 Médio | Pequeno | 🟢 02/05 |
+| F4-03 | Lazy loading de produtos | 🟡 Médio | Médio | 🟢 02/05 |
 | F5-01 | Cupom de desconto | 🟡 Médio | Alto | 🔴 |
 | F5-02 | Status do pedido em tempo real | 🟡 Médio | Alto | 🔴 |
 | F5-03 | Favoritos / Lista de desejos | 🟢 Baixo | Médio | 🔴 |

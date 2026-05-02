@@ -62,6 +62,19 @@
             <span>Subtotal (<span id="totalQty">0</span> itens)</span>
             <span id="subtotal">R$ 0,00</span>
           </div>
+          <!-- CUPOM -->
+          <div class="cupom-area">
+            <div class="cupom-input-row">
+              <input type="text" id="cupomInput" class="form-control" placeholder="Código do cupom" style="text-transform:uppercase">
+              <button class="btn btn-outline btn-sm" onclick="aplicarCupom()">Aplicar</button>
+            </div>
+            <div id="cupomMsg" style="display:none;font-size:.78rem;margin-top:6px"></div>
+          </div>
+
+          <div class="summary-row" id="descontoRow" style="display:none;color:var(--success)">
+            <span>Desconto <span id="cupomCodigo"></span></span>
+            <span id="descontoValor"></span>
+          </div>
           <div class="summary-row">
             <span>Taxa de entrega</span>
             <span id="frete">R$ 5,00</span>
