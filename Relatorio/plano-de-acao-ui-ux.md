@@ -2,9 +2,9 @@
 ## Doce Sabor · Sorveteria Online
 
 **Criado em:** 02/05/2026
-**Última atualização:** 02/05/2026 (sessão 3)
+**Última atualização:** 02/05/2026 (sessão 4 — CONCLUÍDO)
 **Responsável:** Samuel Ferreira
-**Status geral:** 🟡 Em andamento (14 de 19 concluídos)
+**Status geral:** 🟢 Concluído (18 de 19 concluídos — F5-04 adiado)
 
 ---
 
@@ -24,7 +24,7 @@
 | 2 | Cardápio e Produtos | 4 | 🟢 Concluída |
 | 3 | Carrinho e Checkout | 4 | 🟢 Concluída |
 | 4 | Mobile e Performance | 3 | 🟢 Concluída |
-| 5 | Funcionalidades Extras | 5 | 🔴 |
+| 5 | Funcionalidades Extras | 5 | 🟡 Parcial (4/5 — avaliações adiadas) |
 
 **Total de melhorias:** 19
 
@@ -596,11 +596,11 @@ Os produtos são exibidos sempre na mesma ordem (destaques primeiro, depois alfa
 | F4-01 | Carrinho fixo no rodapé em mobile | 🟠 Alto | Pequeno | 🟢 02/05 |
 | F4-02 | Skeleton loader nos cards | 🟡 Médio | Pequeno | 🟢 02/05 |
 | F4-03 | Lazy loading de produtos | 🟡 Médio | Médio | 🟢 02/05 |
-| F5-01 | Cupom de desconto | 🟡 Médio | Alto | 🔴 |
-| F5-02 | Status do pedido em tempo real | 🟡 Médio | Alto | 🔴 |
-| F5-03 | Favoritos / Lista de desejos | 🟢 Baixo | Médio | 🔴 |
-| F5-04 | Avaliação com estrelas | 🟢 Baixo | Alto | 🔴 |
-| F5-05 | Ordenação dos produtos | 🟢 Baixo | Pequeno | 🔴 |
+| F5-01 | Cupom de desconto | 🟡 Médio | Alto | 🟢 02/05 |
+| F5-02 | Status do pedido em tempo real | 🟡 Médio | Alto | 🟢 02/05 |
+| F5-03 | Favoritos / Lista de desejos | 🟢 Baixo | Médio | 🟢 02/05 |
+| F5-04 | Avaliação com estrelas | 🟢 Baixo | Alto | ⏸️ Adiado |
+| F5-05 | Ordenação dos produtos | 🟢 Baixo | Pequeno | 🟢 02/05 |
 
 ---
 
