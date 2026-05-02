@@ -1,5 +1,5 @@
 let selectedPayment = 'pix';
-let currentStep = 1;
+let currentStep     = 1;
 
 const PAYMENT_LABELS = {
   pix:            '📱 PIX',
@@ -22,6 +22,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+/* ── CEP ────────────────────────────────────── */
+
+function mascaraCEP(input) {
+  let v = input.value.replace(/\D/g, '').slice(0, 8);
+  if (v.length > 5) v = v.slice(0, 5) + '-' + v.slice(5);
+  input.value = v;
+}
+
+async function buscaCEP() {
+  const cepEl = document.getElementById('cep');
+  if (!cepEl) return;
+  const cep = cepEl.value.replace(/\D/g, '');
+  if (cep.length !== 8) return;
+
+  cepEl.disabled = true;
+  cepEl.placeholder = 'Buscando...';
+
+  try {
+    const res  = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await res.json();
+
+    if (data.erro) { showToast('CEP não encontrado.', 'warning'); return; }
+
+    document.getElementById('rua').value    = data.logradouro || '';
+    document.getElementById('bairro').value = data.bairro     || '';
+    document.getElementById('cidade').value = data.localidade && data.uf
+      ? `${data.localidade} - ${data.uf}` : '';
+
+    document.getElementById('numero').focus();
+    showToast('Endereço preenchido!', 'success');
+  } catch {
+    showToast('Erro ao buscar CEP. Preencha manualmente.', 'error');
+  } finally {
+    cepEl.disabled    = false;
+    cepEl.placeholder = '00000-000';
+  }
+}
+
+function buildEndereco() {
+  return [
+    document.getElementById('rua')?.value.trim(),
+    document.getElementById('numero')?.value.trim(),
+    document.getElementById('complemento')?.value.trim(),
+    document.getElementById('bairro')?.value.trim(),
+    document.getElementById('cidade')?.value.trim(),
+    document.getElementById('cep')?.value.trim()
+  ].filter(Boolean).join(', ');
+}
 
 /* ── Stepper ────────────────────────────────── */
 
@@ -48,16 +97,18 @@ function goToStep(step) {
   document.getElementById('btnSubmit').style.display = currentStep === 3 ? 'flex' : 'none';
 
   if (currentStep === 3) renderReview();
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function validateStep(step) {
   if (step === 1) {
-    const endereco = document.getElementById('endereco').value.trim();
-    if (!endereco) {
-      showToast('Informe o endereço de entrega.', 'warning');
-      document.getElementById('endereco').focus();
+    const rua    = document.getElementById('rua')?.value.trim();
+    const numero = document.getElementById('numero')?.value.trim();
+    const cidade = document.getElementById('cidade')?.value.trim();
+
+    if (!rua || !numero || !cidade) {
+      showToast('Preencha rua, número e cidade.', 'warning');
+      (document.getElementById('rua') || document.getElementById('numero')).focus();
       return false;
     }
   }
@@ -67,8 +118,8 @@ function validateStep(step) {
 function renderReview() {
   const items    = Cart.getItems();
   const subtotal = Cart.getTotal();
-  const endereco = document.getElementById('endereco').value.trim();
-  const obs      = document.getElementById('observacoes').value.trim();
+  const obs      = document.getElementById('observacoes')?.value.trim();
+  const endereco = buildEndereco();
 
   const reviewEl = document.getElementById('reviewContent');
   if (!reviewEl) return;
@@ -77,7 +128,7 @@ function renderReview() {
     <div class="review-block">
       <div class="review-label">📍 Endereço</div>
       <div class="review-value">${endereco}</div>
-      ${obs ? `<div class="review-value" style="margin-top:4px;font-style:italic">${obs}</div>` : ''}
+      ${obs ? `<div class="review-value" style="margin-top:4px;font-style:italic;color:var(--gray)">"${obs}"</div>` : ''}
     </div>
     <div class="review-block">
       <div class="review-label">💳 Pagamento</div>
@@ -128,7 +179,10 @@ function renderOrderItems() {
 async function loadUserAddress() {
   try {
     const user = await API.get('/auth/perfil');
-    if (user.endereco) document.getElementById('endereco').value = user.endereco;
+    if (user.endereco) {
+      const ruaEl = document.getElementById('rua');
+      if (ruaEl && !ruaEl.value) ruaEl.value = user.endereco;
+    }
   } catch { /* sem endereço salvo */ }
 }
 
@@ -141,8 +195,10 @@ async function submitOrder(e) {
   btn.textContent = '⏳ Processando...';
 
   try {
-    const endereco = document.getElementById('endereco').value.trim();
-    const obs      = document.getElementById('observacoes').value.trim();
+    const endereco = buildEndereco();
+    const obs      = document.getElementById('observacoes')?.value.trim();
+
+    if (!endereco) { showToast('Endereço inválido.', 'warning'); return; }
 
     await API.post('/pedidos', {
       itens:            Cart.getItems().map(i => ({ produto_id: i.id, quantidade: i.quantidade })),

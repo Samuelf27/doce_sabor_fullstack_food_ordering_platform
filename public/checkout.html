@@ -51,11 +51,48 @@
         <div class="checkout-step-content" id="step1">
           <div class="checkout-section">
             <h3>📍 Endereço de Entrega</h3>
-            <div class="form-group">
-              <label class="form-label">Endereço completo *</label>
-              <textarea id="endereco" class="form-control" rows="3"
-                placeholder="Rua, número, bairro, complemento, cidade" required></textarea>
+
+            <div class="form-row" style="margin-bottom:0">
+              <div class="form-group">
+                <label class="form-label">CEP *</label>
+                <input id="cep" class="form-control" type="text"
+                  placeholder="00000-000" maxlength="9" inputmode="numeric"
+                  oninput="mascaraCEP(this)" onblur="buscaCEP()">
+              </div>
+              <div class="form-group" style="display:flex;align-items:flex-end">
+                <button type="button" class="btn btn-outline btn-sm btn-block" onclick="buscaCEP()">
+                  🔍 Buscar CEP
+                </button>
+              </div>
             </div>
+
+            <div class="form-group">
+              <label class="form-label">Rua / Logradouro *</label>
+              <input id="rua" class="form-control" type="text" placeholder="Nome da rua" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Número *</label>
+                <input id="numero" class="form-control" type="text" placeholder="Ex: 123" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Complemento</label>
+                <input id="complemento" class="form-control" type="text" placeholder="Apto, bloco...">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Bairro *</label>
+                <input id="bairro" class="form-control" type="text" placeholder="Bairro" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cidade / UF *</label>
+                <input id="cidade" class="form-control" type="text" placeholder="Cidade - UF" required>
+              </div>
+            </div>
+
             <div class="form-group" style="margin-bottom:0">
               <label class="form-label">Observações</label>
               <textarea id="observacoes" class="form-control" rows="2"

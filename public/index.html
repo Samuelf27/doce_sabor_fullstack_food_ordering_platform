@@ -71,11 +71,19 @@
 <section class="section" style="padding-top:32px;padding-bottom:60px">
   <div class="container">
 
-    <!-- ABAS DE CATEGORIA -->
-    <div class="category-tabs-wrapper">
-      <div class="category-tabs" id="categoryTabs">
-        <div class="loading" style="padding:8px"><div class="spinner" style="width:24px;height:24px"></div></div>
+    <!-- ABAS DE CATEGORIA + ORDENAÇÃO -->
+    <div class="catalog-controls">
+      <div class="category-tabs-wrapper">
+        <div class="category-tabs" id="categoryTabs">
+          <div class="loading" style="padding:8px"><div class="spinner" style="width:24px;height:24px"></div></div>
+        </div>
       </div>
+      <select class="sort-select" id="sortSelect" onchange="changeSort(this.value)">
+        <option value="relevancia">⭐ Relevância</option>
+        <option value="menor_preco">💰 Menor preço</option>
+        <option value="maior_preco">💎 Maior preço</option>
+        <option value="az">🔤 A → Z</option>
+      </select>
     </div>
 
     <!-- GRID DE PRODUTOS -->
