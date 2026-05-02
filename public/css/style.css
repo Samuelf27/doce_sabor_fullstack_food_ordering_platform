@@ -668,6 +668,73 @@ tbody tr:hover { background:var(--primary-lighter); }
   width:44px; height:44px; font-size:1.15rem;
 }
 
+/* ── Favorito (coração no card) ─────────────── */
+.fav-btn {
+  position:absolute; top:10px; right:10px;
+  background:rgba(255,255,255,.85); border:none;
+  border-radius:50%; width:34px; height:34px;
+  font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:var(--transition-f); backdrop-filter:blur(4px);
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
+.fav-btn:hover  { transform:scale(1.15); }
+.fav-btn.active { background:rgba(255,255,255,.95); }
+
+/* ── Ordenação e controles do catálogo ──────── */
+.catalog-controls {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:16px; flex-wrap:wrap; margin-bottom:32px;
+}
+.catalog-controls .category-tabs-wrapper { flex:1; margin-bottom:0; }
+.sort-select {
+  padding:10px 16px; border-radius:var(--border-radius-full);
+  border:2px solid var(--primary-light); background:var(--white);
+  color:var(--gray-dark); font-family:'Poppins',sans-serif;
+  font-size:.85rem; font-weight:500; cursor:pointer;
+  outline:none; transition:var(--transition-f); white-space:nowrap;
+  flex-shrink:0;
+}
+.sort-select:focus { border-color:var(--primary); }
+
+/* ── Tab favoritos ──────────────────────────── */
+.tab-btn-fav { border-color:rgba(236,72,153,.25); color:var(--accent); }
+.tab-btn-fav:hover { border-color:var(--accent); color:var(--accent); }
+.tab-btn-fav.active { background:var(--accent); border-color:var(--accent); color:var(--white); }
+
+/* ── Timeline de status ─────────────────────── */
+.status-timeline {
+  display:flex; align-items:center; margin:14px 0 4px;
+  overflow-x:auto; padding-bottom:4px;
+}
+.timeline-step {
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  min-width:64px;
+}
+.timeline-icon {
+  width:36px; height:36px; border-radius:50%;
+  border:2px solid var(--gray-lighter); background:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-size:.8rem; font-weight:700; color:var(--gray-light);
+  transition:var(--transition-f);
+}
+.timeline-step.done   .timeline-icon { background:var(--success); border-color:var(--success); color:var(--white); font-size:1rem; }
+.timeline-step.active .timeline-icon { background:var(--primary); border-color:var(--primary); color:var(--white); font-size:1rem; box-shadow:0 0 0 4px rgba(124,58,237,.20); }
+.timeline-label { font-size:.68rem; font-weight:600; color:var(--gray-light); text-align:center; white-space:nowrap; }
+.timeline-step.done   .timeline-label { color:var(--success); }
+.timeline-step.active .timeline-label { color:var(--primary); }
+.timeline-connector {
+  flex:1; height:2px; background:var(--gray-lighter);
+  min-width:24px; margin-bottom:20px; transition:var(--transition-f);
+}
+.timeline-connector.done { background:var(--success); }
+
+/* ── Cupom de desconto ──────────────────────── */
+.cupom-area { margin:16px 0 12px; }
+.cupom-input-row { display:flex; gap:8px; }
+.cupom-input-row .form-control { flex:1; padding:9px 14px; font-size:.85rem; }
+.cupom-input-row .btn { flex-shrink:0; }
+
 /* ── Skeleton loader ────────────────────────── */
 @keyframes pulse {
   0%,100% { opacity:1; }
