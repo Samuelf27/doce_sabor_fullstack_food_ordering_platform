@@ -22,13 +22,33 @@
 
 <div class="checkout-page">
   <div class="container">
-    <h1 style="font-size:1.8rem;margin-bottom:24px">✅ Finalizar Pedido</h1>
+    <h1 style="font-size:1.6rem;margin-bottom:24px">✅ Finalizar Pedido</h1>
+
+    <!-- STEPPER -->
+    <div class="stepper" id="stepper">
+      <div class="step-item active" id="stepItem1">
+        <div class="step-circle">1</div>
+        <span class="step-label">Entrega</span>
+      </div>
+      <div class="step-connector" id="conn1"></div>
+      <div class="step-item" id="stepItem2">
+        <div class="step-circle">2</div>
+        <span class="step-label">Pagamento</span>
+      </div>
+      <div class="step-connector" id="conn2"></div>
+      <div class="step-item" id="stepItem3">
+        <div class="step-circle">3</div>
+        <span class="step-label">Confirmar</span>
+      </div>
+    </div>
+
     <div class="checkout-grid">
 
       <!-- FORMULÁRIO -->
-      <div>
-        <form id="checkoutForm">
-          <!-- Endereço -->
+      <form id="checkoutForm" onsubmit="submitOrder(event)">
+
+        <!-- STEP 1: ENDEREÇO -->
+        <div class="checkout-step-content" id="step1">
           <div class="checkout-section">
             <h3>📍 Endereço de Entrega</h3>
             <div class="form-group">
@@ -36,14 +56,16 @@
               <textarea id="endereco" class="form-control" rows="3"
                 placeholder="Rua, número, bairro, complemento, cidade" required></textarea>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom:0">
               <label class="form-label">Observações</label>
               <textarea id="observacoes" class="form-control" rows="2"
-                placeholder="Informações adicionais, ponto de referência..."></textarea>
+                placeholder="Ponto de referência, instruções para entrega..."></textarea>
             </div>
           </div>
+        </div>
 
-          <!-- Pagamento -->
+        <!-- STEP 2: PAGAMENTO -->
+        <div class="checkout-step-content" id="step2" style="display:none">
           <div class="checkout-section">
             <h3>💳 Forma de Pagamento</h3>
             <div class="payment-options">
@@ -61,26 +83,47 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-block" id="submitBtn">
+        <!-- STEP 3: REVISÃO -->
+        <div class="checkout-step-content" id="step3" style="display:none">
+          <div class="checkout-section">
+            <h3>🧾 Revisão do Pedido</h3>
+            <div id="reviewContent"></div>
+          </div>
+        </div>
+
+        <!-- NAVEGAÇÃO ENTRE ETAPAS -->
+        <div class="step-navigation">
+          <button type="button" class="btn btn-outline" id="btnPrev" style="display:none" onclick="goToStep(currentStep - 1)">
+            ← Anterior
+          </button>
+          <button type="button" class="btn btn-primary" id="btnNext" onclick="goToStep(currentStep + 1)">
+            Próximo →
+          </button>
+          <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit" style="display:none">
             ✅ Confirmar Pedido
           </button>
-        </form>
-      </div>
+        </div>
 
-      <!-- RESUMO -->
+      </form>
+
+      <!-- RESUMO (sempre visível) -->
       <div>
         <div class="order-summary">
           <h3>Resumo</h3>
           <div id="checkoutItems"></div>
           <div class="summary-row" style="margin-top:16px">
-            <span>Subtotal</span><span id="checkSubtotal">—</span>
+            <span>Subtotal</span>
+            <span id="checkSubtotal">—</span>
           </div>
           <div class="summary-row">
-            <span>Entrega</span><span id="checkFrete">—</span>
+            <span>Entrega</span>
+            <span id="checkFrete">—</span>
           </div>
           <div class="summary-row total">
-            <span>Total</span><span class="price" id="checkTotal">—</span>
+            <span>Total</span>
+            <span class="price" id="checkTotal">—</span>
           </div>
         </div>
       </div>

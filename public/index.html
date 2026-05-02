@@ -126,6 +126,27 @@
   </div>
 </footer>
 
+<!-- MODAL DE PRODUTO -->
+<div class="modal-overlay" id="productModal" onclick="closeProductModal()">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="modalName">-</h3>
+      <button class="modal-close" onclick="closeProductModal()">✕</button>
+    </div>
+    <div style="text-align:center;padding:20px 0;font-size:100px;line-height:1;background:var(--primary-lighter);border-radius:var(--border-radius-lg);margin-bottom:20px">
+      <span id="modalEmoji">🍨</span>
+    </div>
+    <div style="margin-bottom:12px">
+      <span class="badge badge-primary" id="modalCat"></span>
+    </div>
+    <p id="modalDesc" style="color:var(--gray);font-size:.9rem;line-height:1.7;margin-bottom:22px"></p>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--gray-lighter)">
+      <div style="font-size:1.6rem;font-weight:800;color:var(--primary)" id="modalPrice">—</div>
+      <div id="modalAction"></div>
+    </div>
+  </div>
+</div>
+
 <div class="toast-container" id="toastContainer"></div>
 
 <script src="/js/api.js"></script>
