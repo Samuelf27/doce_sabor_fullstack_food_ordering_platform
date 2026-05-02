@@ -248,21 +248,10 @@ As abas de categoria fazem scroll horizontal em mobile, mas não há nenhuma ind
 **Esforço:** Pequeno (30min)
 **Status:** 🟢 Concluído — 02/05/2026
 
-**Problema:**
-Os botões `−` e `+` de quantidade no carrinho têm 30px de diâmetro — abaixo do mínimo recomendado de 44px para touch (padrão Apple HIG e WCAG).
-
-**Solução:**
-- Aumentar os botões de quantidade para `44px × 44px`
-- Ajustar font-size e espaçamento do número entre eles
-- Verificar que o layout não quebra em mobile
-
-**Arquivos afetados:**
-- `public/css/style.css` (`.qty-btn`, `.qty-controls`)
-
 **Critério de conclusão:**
-- [ ] Botões têm mínimo 44px em largura e altura
-- [ ] Fácil de pressionar em touch screen
-- [ ] Layout do carrinho não quebra
+- [x] Botões têm mínimo 44px em largura e altura
+- [x] Fácil de pressionar em touch screen
+- [x] Layout do carrinho não quebra
 
 ---
 
@@ -272,27 +261,12 @@ Os botões `−` e `+` de quantidade no carrinho têm 30px de diâmetro — abai
 **Esforço:** Médio (2–3h)
 **Status:** 🟢 Concluído — 02/05/2026
 
-**Problema:**
-O checkout é uma página única sem indicação de etapas. O usuário não sabe se está no começo, meio ou fim do processo — isso aumenta a ansiedade e o abandono.
-
-**Solução:**
-- Adicionar stepper visual no topo do checkout: `Entrega → Pagamento → Confirmar`
-- Dividir o formulário em 3 etapas com navegação `Anterior` / `Próximo`
-- Etapa 1: Endereço de entrega
-- Etapa 2: Forma de pagamento
-- Etapa 3: Revisão do pedido + confirmar
-
-**Arquivos afetados:**
-- `public/checkout.html`
-- `public/js/checkout.js`
-- `public/css/style.css`
-
 **Critério de conclusão:**
-- [ ] Stepper visível no topo com 3 etapas
-- [ ] Etapa atual destacada visualmente
-- [ ] Navegação entre etapas funciona
-- [ ] Validação antes de avançar (endereço preenchido, pagamento selecionado)
-- [ ] Revisão final antes de confirmar
+- [x] Stepper visível no topo com 3 etapas (Entrega → Pagamento → Confirmar)
+- [x] Etapa atual destacada visualmente
+- [x] Navegação entre etapas funciona (Anterior / Próximo)
+- [x] Validação antes de avançar (endereço preenchido, pagamento selecionado)
+- [x] Revisão final antes de confirmar
 
 ---
 
@@ -300,26 +274,14 @@ O checkout é uma página única sem indicação de etapas. O usuário não sabe
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Médio (2–3h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-O endereço de entrega é um único `<textarea>` livre, sem validação ou estrutura. Isso gera erros de entrega e dificulta o processamento dos pedidos.
-
-**Solução:**
-- Substituir o textarea por campos separados: CEP, Rua, Número, Complemento, Bairro, Cidade
-- Integrar com a API pública ViaCEP (`viacep.com.br/ws/{cep}/json/`) para preenchimento automático
-- Ao digitar o CEP e sair do campo, preencher Rua, Bairro e Cidade automaticamente
-
-**Arquivos afetados:**
-- `public/checkout.html`
-- `public/js/checkout.js`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Campos separados para cada parte do endereço
-- [ ] CEP dispara busca automática na ViaCEP
-- [ ] Campos preenchidos automaticamente após busca
-- [ ] Validação: CEP inválido mostra erro
-- [ ] Número e Complemento ficam para preenchimento manual
+- [x] Campos separados para cada parte do endereço (CEP, Rua, Número, Complemento, Bairro, Cidade)
+- [x] CEP dispara busca automática na ViaCEP
+- [x] Campos preenchidos automaticamente após busca
+- [x] Validação: CEP inválido mostra erro
+- [x] Número e Complemento ficam para preenchimento manual
 
 ---
 
@@ -343,9 +305,9 @@ O frete de R$ 5,00 é cobrado sem nenhuma explicação. O cliente não sabe se e
 - `public/css/style.css`
 
 **Critério de conclusão:**
-- [ ] Informação de frete visível no carrinho
-- [ ] Prazo estimado de entrega exibido
-- [ ] Design consistente com o restante da página
+- [x] Informação de frete visível no carrinho
+- [x] Prazo estimado de entrega exibido
+- [x] Design consistente com o restante da página
 
 ---
 
@@ -361,24 +323,12 @@ O frete de R$ 5,00 é cobrado sem nenhuma explicação. O cliente não sabe se e
 
 **Prioridade:** 🟠 Alto
 **Esforço:** Pequeno (1–2h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Em mobile, o layout de 2 colunas do carrinho colapsa para 1 coluna, jogando o resumo do pedido (e o botão "Finalizar") para depois de toda a lista de itens. Em um carrinho com muitos itens, o botão fica muito longe.
-
-**Solução:**
-- Em mobile, fixar o resumo + botão "Finalizar Pedido" no rodapé da tela (`position: sticky; bottom: 0`)
-- A lista de itens fica com scroll normal acima
-- O resumo fixo mostra: total e botão de finalizar
-
-**Arquivos afetados:**
-- `public/css/style.css`
-- `public/carrinho.html`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Em mobile, botão "Finalizar" sempre visível na tela
-- [ ] Lista de itens com scroll independente
-- [ ] Não sobrepõe itens importantes
+- [x] Em mobile, botão "Finalizar" sempre visível na tela (position: sticky; bottom: 0)
+- [x] Lista de itens com scroll independente
+- [x] Não sobrepõe itens importantes
 
 ---
 
@@ -386,24 +336,12 @@ Em mobile, o layout de 2 colunas do carrinho colapsa para 1 coluna, jogando o re
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Pequeno (1–2h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Enquanto os produtos carregam da API, aparece apenas um spinner centralizado. Em conexões lentas, a página parece vazia ou quebrada.
-
-**Solução:**
-- Substituir o spinner por skeleton loaders no formato dos cards de produto
-- Exibir 6 cards "fantasma" com animação de pulso enquanto a API responde
-- Substituir pelos cards reais quando os dados chegarem
-
-**Arquivos afetados:**
-- `public/css/style.css` (animação skeleton)
-- `public/js/cardapio.js` (renderização dos skeletons)
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] 6 skeleton cards aparecem enquanto a API carrega
-- [ ] Animação de pulso suave
-- [ ] Transição limpa do skeleton para o card real
+- [x] 8 skeleton cards aparecem enquanto a API carrega
+- [x] Animação de pulso suave (CSS keyframes)
+- [x] Transição limpa do skeleton para o card real
 
 ---
 
@@ -411,25 +349,13 @@ Enquanto os produtos carregam da API, aparece apenas um spinner centralizado. Em
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Médio (2–3h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Todos os produtos são carregados de uma vez na memória. Com 17 produtos isso não é problema, mas conforme o catálogo crescer, vai impactar performance e tempo de carregamento.
-
-**Solução:**
-- Carregar inicialmente 12 produtos
-- Adicionar botão "Ver mais" ou scroll infinito para carregar os próximos
-- Manter o filtro de categoria funcionando com paginação
-
-**Arquivos afetados:**
-- `public/js/cardapio.js`
-- `public/css/style.css` (botão "Ver mais")
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Máximo 12 produtos na carga inicial
-- [ ] Botão "Ver mais" carrega próximos 12
-- [ ] Filtro de categoria reseta a paginação
-- [ ] Busca funciona sobre todos os produtos (não só os carregados)
+- [x] Máximo 12 produtos na carga inicial
+- [x] Botão "Ver mais X produtos →" carrega próximos 12
+- [x] Filtro de categoria reseta a paginação
+- [x] Busca funciona sobre todos os produtos (filtro em memória)
 
 ---
 
@@ -445,28 +371,14 @@ Todos os produtos são carregados de uma vez na memória. Com 17 produtos isso n
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Alto (4–6h — requer backend)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Não existe mecanismo de promoções ou descontos. Cupons são uma ferramenta importante para campanhas de marketing e retenção.
-
-**Solução:**
-- Adicionar campo "Código de cupom" no resumo do carrinho
-- Backend: nova tabela `cupons` (código, tipo, valor, validade, limite de uso)
-- Nova rota `POST /api/cupons/validar` que retorna o desconto
-- Frontend: aplicar desconto no total e mostrar linha "Desconto: −R$ X"
-
-**Arquivos afetados:**
-- `public/carrinho.html`
-- `public/js/carrinho.js`
-- `database/schema.sql` (nova tabela)
-- `src/routes/` e `src/controllers/` (nova rota)
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Campo de cupom visível no carrinho
-- [ ] Validação retorna erro claro para cupom inválido/expirado
-- [ ] Desconto aparece como linha separada no resumo
-- [ ] Total final já com desconto aplicado
+- [x] Campo de cupom visível no carrinho
+- [x] Validação retorna erro claro para cupom inválido/expirado
+- [x] Desconto aparece como linha separada no resumo
+- [x] Total final já com desconto aplicado
+- [x] Cupons ativos: `BEMVINDO10` (10% off) e `FRETE5` (R$5 off)
 
 ---
 
@@ -474,26 +386,13 @@ Não existe mecanismo de promoções ou descontos. Cupons são uma ferramenta im
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Alto (4–6h — requer backend)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Após fazer o pedido, o cliente é redirecionado para `pedidos.html` mas não há atualização automática do status. Precisa recarregar a página manualmente.
-
-**Solução:**
-- Implementar polling a cada 30 segundos na página de pedidos (`setInterval`)
-- Exibir linha do tempo visual do pedido: `Confirmado → Preparando → Saiu → Entregue`
-- Badge colorido por status (amarelo, laranja, azul, verde)
-
-**Arquivos afetados:**
-- `public/pedidos.html`
-- `public/js/pedidos.js`
-- `public/css/style.css`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Status atualiza automaticamente sem reload
-- [ ] Linha do tempo visual por pedido
-- [ ] Badge de cor por status
-- [ ] Para o polling quando pedido está "Entregue" ou "Cancelado"
+- [x] Status atualiza automaticamente sem reload (polling 30s via setInterval)
+- [x] Linha do tempo visual por pedido (Confirmado → Preparando → Saiu → Entregue)
+- [x] Badge de cor por status (amarelo, laranja, azul, verde)
+- [x] Para o polling quando todos os pedidos estão "entregue" ou "cancelado"
 
 ---
 
