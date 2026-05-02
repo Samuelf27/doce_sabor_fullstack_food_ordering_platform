@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root --password=\"\" -e \"SELECT VERSION\\(\\);\" 2>&1)",
+      "Bash(curl -s http://localhost:3000/api/produtos/categorias)",
+      "Bash(mysqladmin -u root -p'Mepoupe#3' status)",
+      "PowerShell(netstat -an)",
+      "PowerShell(& \"mysql\" -u root -pMepoupe#3 -e \"SHOW DATABASES;\" 2>&1)",
+      "PowerShell(& \"C:\\\\Program Files\\\\MySQL\\\\MySQL Server 8.0\\\\bin\\\\mysql.exe\" -u root \"-pMepoupe#3\" -e \"SHOW DATABASES;\" 2>&1)"
+    ]
+  }
+}
