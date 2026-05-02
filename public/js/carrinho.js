@@ -12,7 +12,7 @@ function renderCart() {
         <span class="icon">🛒</span>
         <h3>Seu carrinho está vazio</h3>
         <p>Adicione produtos do cardápio para continuar</p>
-        <a href="/cardapio.html" class="btn btn-primary">Ver Cardápio</a>
+        <a href="/" class="btn btn-primary">Ver Cardápio</a>
       </div>`;
     if (summary) summary.style.display = 'none';
     return;

@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       }, 300);
     });
   }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeProductModal();
+  });
 });
+
+/* ── Categorias ─────────────────────────────────────────── */
 
 async function loadCategories() {
   const tabs = document.getElementById('categoryTabs');
@@ -46,6 +52,8 @@ async function loadCategories() {
     console.error(e);
   }
 }
+
+/* ── Produtos ───────────────────────────────────────────── */
 
 async function loadProducts() {
   const grid = document.getElementById('productsGrid');
@@ -102,17 +110,17 @@ function productCard(p) {
   const emojiEscaped = (p.imagem_emoji || '🍨').replace(/'/g, "\\'");
 
   const actionBtn = qty > 0
-    ? `<div class="qty-controls">
+    ? `<div class="qty-controls" onclick="event.stopPropagation()">
          <button class="qty-btn" onclick="changeQty(${p.id}, -1)">−</button>
          <span class="qty-value">${qty}</span>
          <button class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
        </div>`
-    : `<button class="btn btn-primary btn-sm" onclick="addToCart(${p.id},'${nomeEscaped}',${p.preco},'${emojiEscaped}')">
+    : `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();addToCart(${p.id},'${nomeEscaped}',${p.preco},'${emojiEscaped}')">
          + Carrinho
        </button>`;
 
   return `
-    <div class="product-card">
+    <div class="product-card" onclick="openProductModal(${p.id})">
       <div class="product-card-img">
         <span>${p.imagem_emoji || '🍨'}</span>
         ${p.destaque ? '<span class="badge-destaque">⭐ Destaque</span>' : ''}
@@ -139,10 +147,70 @@ function changeQty(id, delta) {
   const item = Cart.getItems().find(i => i.id === id);
   if (!item) return;
   const newQty = item.quantidade + delta;
-  if (newQty <= 0) {
-    Cart.remove(id);
-  } else {
-    Cart.setQty(id, newQty);
-  }
+  if (newQty <= 0) Cart.remove(id); else Cart.setQty(id, newQty);
   renderProducts();
+}
+
+/* ── Modal de Produto ───────────────────────────────────── */
+
+function openProductModal(id) {
+  const p = allProducts.find(p => p.id === id);
+  if (!p) return;
+
+  document.getElementById('modalEmoji').textContent = p.imagem_emoji || '🍨';
+  document.getElementById('modalName').textContent  = p.nome;
+  document.getElementById('modalCat').textContent   = `${p.categoria_icone || ''} ${p.categoria_nome || ''}`;
+  document.getElementById('modalDesc').textContent  = p.descricao || '';
+  document.getElementById('modalPrice').textContent = formatCurrency(p.preco);
+
+  refreshModalAction(id);
+  document.getElementById('productModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProductModal() {
+  document.getElementById('productModal')?.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function refreshModalAction(id) {
+  const p = allProducts.find(p => p.id === id);
+  if (!p) return;
+  const cartItem = Cart.getItems().find(i => i.id === id);
+  const qty = cartItem ? cartItem.quantidade : 0;
+  const nomeEscaped = p.nome.replace(/'/g, "\\'");
+  const emojiEscaped = (p.imagem_emoji || '🍨').replace(/'/g, "\\'");
+
+  const actionEl = document.getElementById('modalAction');
+  if (!actionEl) return;
+
+  if (qty > 0) {
+    actionEl.innerHTML = `
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="modalChangeQty(${p.id}, -1)">−</button>
+        <span class="qty-value">${qty}</span>
+        <button class="qty-btn" onclick="modalChangeQty(${p.id}, 1)">+</button>
+      </div>`;
+  } else {
+    actionEl.innerHTML = `
+      <button class="btn btn-primary" onclick="modalAddToCart(${p.id},'${nomeEscaped}',${p.preco},'${emojiEscaped}')">
+        + Adicionar ao Carrinho
+      </button>`;
+  }
+}
+
+function modalAddToCart(id, nome, preco, emoji) {
+  Cart.add({ id, nome, preco, imagem_emoji: emoji });
+  showToast(`${nome} adicionado! 🛒`, 'success');
+  renderProducts();
+  refreshModalAction(id);
+}
+
+function modalChangeQty(id, delta) {
+  const item = Cart.getItems().find(i => i.id === id);
+  if (!item) return;
+  const newQty = item.quantidade + delta;
+  if (newQty <= 0) Cart.remove(id); else Cart.setQty(id, newQty);
+  renderProducts();
+  refreshModalAction(id);
 }

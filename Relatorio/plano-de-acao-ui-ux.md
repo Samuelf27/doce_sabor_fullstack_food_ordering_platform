@@ -2,9 +2,9 @@
 ## Doce Sabor · Sorveteria Online
 
 **Criado em:** 02/05/2026
-**Última atualização:** 02/05/2026
+**Última atualização:** 02/05/2026 (sessão 2)
 **Responsável:** Samuel Ferreira
-**Status geral:** 🟡 Em andamento (5 de 19 concluídos)
+**Status geral:** 🟡 Em andamento (10 de 19 concluídos)
 
 ---
 
@@ -21,8 +21,8 @@
 | Fase | Tema | Itens | Status |
 |------|------|-------|--------|
 | 1 | Estrutura e Navegação | 3 | 🟢 Concluída |
-| 2 | Cardápio e Produtos | 4 | 🟡 Parcial (2/4) |
-| 3 | Carrinho e Checkout | 4 | 🔴 |
+| 2 | Cardápio e Produtos | 4 | 🟢 Concluída |
+| 3 | Carrinho e Checkout | 4 | 🟡 Parcial (3/4) |
 | 4 | Mobile e Performance | 3 | 🔴 |
 | 5 | Funcionalidades Extras | 5 | 🔴 |
 
@@ -160,7 +160,7 @@ Não existe campo de busca. O cliente que quer um "milkshake de ovomaltine" prec
 
 **Prioridade:** 🟠 Alto
 **Esforço:** Médio (3–4h)
-**Status:** 🔴 Não iniciado
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Problema:**
 A descrição do produto é cortada em 2 linhas no card. Não há forma de ver a descrição completa, informações adicionais ou uma foto/emoji maior antes de adicionar ao carrinho.
@@ -176,11 +176,11 @@ A descrição do produto é cortada em 2 linhas no card. Não há forma de ver a
 - `public/css/style.css` (ajuste fino do modal)
 
 **Critério de conclusão:**
-- [ ] Clique no card abre o modal
-- [ ] Modal exibe todas as informações do produto
-- [ ] Botão de adicionar funciona dentro do modal
-- [ ] Modal fecha com ESC e clique no overlay
-- [ ] Funciona em mobile sem overflow
+- [x] Clique no card abre o modal
+- [x] Modal exibe todas as informações do produto
+- [x] Botão de adicionar e controles +/− funcionam dentro do modal
+- [x] Modal fecha com ESC e clique no overlay
+- [x] Scroll da página travado enquanto modal está aberto
 
 ---
 
@@ -246,7 +246,7 @@ As abas de categoria fazem scroll horizontal em mobile, mas não há nenhuma ind
 
 **Prioridade:** 🟠 Alto
 **Esforço:** Pequeno (30min)
-**Status:** 🔴 Não iniciado
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Problema:**
 Os botões `−` e `+` de quantidade no carrinho têm 30px de diâmetro — abaixo do mínimo recomendado de 44px para touch (padrão Apple HIG e WCAG).
@@ -270,7 +270,7 @@ Os botões `−` e `+` de quantidade no carrinho têm 30px de diâmetro — abai
 
 **Prioridade:** 🟠 Alto
 **Esforço:** Médio (2–3h)
-**Status:** 🔴 Não iniciado
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Problema:**
 O checkout é uma página única sem indicação de etapas. O usuário não sabe se está no começo, meio ou fim do processo — isso aumenta a ansiedade e o abandono.
@@ -327,7 +327,7 @@ O endereço de entrega é um único `<textarea>` livre, sem validação ou estru
 
 **Prioridade:** 🟡 Médio
 **Esforço:** Pequeno (1h)
-**Status:** 🔴 Não iniciado
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Problema:**
 O frete de R$ 5,00 é cobrado sem nenhuma explicação. O cliente não sabe se existe frete grátis, qual o prazo de entrega ou a área de cobertura.
@@ -586,13 +586,13 @@ Os produtos são exibidos sempre na mesma ordem (destaques primeiro, depois alfa
 | F1-02 | Banner compacto (não 100vh) | 🔴 Crítico | Pequeno | 🟢 02/05 |
 | F1-03 | Atualizar links de navegação | 🟠 Alto | Pequeno | 🟢 02/05 |
 | F2-01 | Busca por nome de produto | 🔴 Crítico | Pequeno | 🟢 02/05 |
-| F2-02 | Modal de detalhe do produto | 🟠 Alto | Médio | 🔴 |
+| F2-02 | Modal de detalhe do produto | 🟠 Alto | Médio | 🟢 02/05 |
 | F2-03 | Indicador de quantidade no card | 🟠 Alto | Pequeno | 🟢 02/05 |
 | F2-04 | Indicador de scroll nas abas | 🟡 Médio | Pequeno | 🟢 02/05 |
-| F3-01 | Botões de quantidade maiores | 🟠 Alto | Pequeno | 🔴 |
-| F3-02 | Stepper de progresso no checkout | 🟠 Alto | Médio | 🔴 |
+| F3-01 | Botões de quantidade maiores | 🟠 Alto | Pequeno | 🟢 02/05 |
+| F3-02 | Stepper de progresso no checkout | 🟠 Alto | Médio | 🟢 02/05 |
 | F3-03 | Campo de endereço com CEP | 🟡 Médio | Médio | 🔴 |
-| F3-04 | Comunicar frete e prazo de entrega | 🟡 Médio | Pequeno | 🔴 |
+| F3-04 | Comunicar frete e prazo de entrega | 🟡 Médio | Pequeno | 🟢 02/05 |
 | F4-01 | Carrinho fixo no rodapé em mobile | 🟠 Alto | Pequeno | 🔴 |
 | F4-02 | Skeleton loader nos cards | 🟡 Médio | Pequeno | 🔴 |
 | F4-03 | Lazy loading de produtos | 🟡 Médio | Médio | 🔴 |

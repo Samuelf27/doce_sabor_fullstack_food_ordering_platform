@@ -618,6 +618,56 @@ tbody tr:hover { background:var(--primary-lighter); }
 .qty-controls .qty-btn:hover { background:var(--primary); color:var(--white); border-color:var(--primary); }
 .qty-controls .qty-value { font-weight:700; font-size:.95rem; min-width:22px; text-align:center; color:var(--primary); }
 
+/* ── Stepper ────────────────────────────────── */
+.stepper {
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:32px; padding:0 8px;
+}
+.step-item {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.step-circle {
+  width:40px; height:40px; border-radius:50%;
+  border:2px solid var(--gray-lighter); background:var(--white);
+  color:var(--gray); font-weight:700; font-size:.95rem;
+  display:flex; align-items:center; justify-content:center;
+  transition:var(--transition-f);
+}
+.step-item.active .step-circle { background:var(--primary); border-color:var(--primary); color:var(--white); }
+.step-item.done   .step-circle { background:var(--success);  border-color:var(--success);  color:var(--white); }
+.step-label { font-size:.72rem; font-weight:600; color:var(--gray); white-space:nowrap; }
+.step-item.active .step-label { color:var(--primary); }
+.step-item.done   .step-label { color:var(--success); }
+.step-connector {
+  flex:1; height:2px; background:var(--gray-lighter);
+  min-width:48px; margin-bottom:22px; transition:var(--transition-f);
+}
+.step-connector.done { background:var(--success); }
+
+/* ── Step navigation ────────────────────────── */
+.step-navigation {
+  display:flex; gap:12px; margin-top:8px;
+}
+.step-navigation .btn { flex:1; justify-content:center; }
+
+/* ── Checkout review ────────────────────────── */
+.review-block { margin-bottom:18px; }
+.review-label { font-size:.72rem; font-weight:700; color:var(--primary); text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px; }
+.review-value { font-size:.88rem; color:var(--gray-dark); line-height:1.5; }
+
+/* ── Frete banner ───────────────────────────── */
+.frete-banner {
+  background:var(--primary-lighter); border:1px solid var(--primary-light);
+  color:var(--primary); font-size:.82rem; font-weight:500;
+  padding:10px 16px; border-radius:var(--border-radius);
+  text-align:center; margin-bottom:20px;
+}
+
+/* ── Qty buttons grandes no carrinho ────────── */
+.cart-item-qty .qty-btn {
+  width:44px; height:44px; font-size:1.15rem;
+}
+
 /* ── Banner responsive ──────────────────────── */
 @media(max-width:768px) {
   .home-banner-inner { flex-direction:column; align-items:flex-start; gap:18px; }
