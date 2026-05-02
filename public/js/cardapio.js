@@ -193,6 +193,18 @@ function renderProducts() {
 
 function loadMore() { visibleCount += 12; renderProducts(); }
 
+/* ── Estrelas ───────────────────────────────────────────── */
+
+function renderStars(media, total) {
+  if (!total) return '';
+  const full  = Math.round(media);
+  const icons = Array.from({ length: 5 }, (_, i) => i < full ? '★' : '☆').join('');
+  return `<div class="stars-display">
+    <span class="stars-icons">${icons}</span>
+    <span class="stars-label">${media.toFixed(1)} (${total})</span>
+  </div>`;
+}
+
 /* ── Card de produto ────────────────────────────────────── */
 
 function productCard(p) {
@@ -224,6 +236,7 @@ function productCard(p) {
       <div class="product-card-body">
         <div class="product-card-cat">${p.categoria_icone || ''} ${p.categoria_nome || ''}</div>
         <div class="product-card-name">${p.nome}</div>
+        ${renderStars(parseFloat(p.media_estrelas) || 0, parseInt(p.total_avaliacoes) || 0)}
         <div class="product-card-desc">${p.descricao || ''}</div>
         <div class="product-card-footer">
           <div class="product-price">${formatCurrency(p.preco)}</div>
@@ -257,9 +270,11 @@ function openProductModal(id) {
   document.getElementById('modalCat').textContent   = `${p.categoria_icone || ''} ${p.categoria_nome || ''}`;
   document.getElementById('modalDesc').textContent  = p.descricao || '';
   document.getElementById('modalPrice').textContent = formatCurrency(p.preco);
+  document.getElementById('modalStars').innerHTML   = renderStars(parseFloat(p.media_estrelas) || 0, parseInt(p.total_avaliacoes) || 0);
   refreshModalAction(id);
   document.getElementById('productModal').classList.add('active');
   document.body.style.overflow = 'hidden';
+  loadModalRatings(id);
 }
 
 function closeProductModal() {
@@ -305,4 +320,107 @@ function modalChangeQty(id, delta) {
   if (newQty <= 0) Cart.remove(id); else Cart.setQty(id, newQty);
   renderProducts();
   refreshModalAction(id);
+}
+
+/* ── Avaliações no modal ────────────────────────────────── */
+
+let _currentRatingProductId = null;
+let _selectedStar           = 0;
+
+async function loadModalRatings(produtoId) {
+  _currentRatingProductId = produtoId;
+  _selectedStar           = 0;
+
+  const statsEl = document.getElementById('modalRatingStats');
+  const formEl  = document.getElementById('modalRatingForm');
+  const listEl  = document.getElementById('modalRatingsList');
+  if (!statsEl || !formEl || !listEl) return;
+
+  listEl.innerHTML = '<div style="color:var(--gray);font-size:.85rem;padding:8px 0">Carregando avaliações…</div>';
+  formEl.innerHTML = '';
+
+  try {
+    const data = await API.get(`/avaliacoes/produto/${produtoId}`);
+    const { avaliacoes, media, total } = data;
+
+    statsEl.textContent = total ? `${media.toFixed(1)} ★ · ${total} avaliação${total !== 1 ? 'ões' : ''}` : '';
+
+    formEl.innerHTML = renderRatingForm(produtoId);
+
+    if (!avaliacoes.length) {
+      listEl.innerHTML = '<div style="color:var(--gray);font-size:.85rem;padding:8px 0">Nenhuma avaliação ainda. Seja o primeiro!</div>';
+    } else {
+      listEl.innerHTML = avaliacoes.map(a => {
+        const stars = Array.from({ length: 5 }, (_, i) => i < a.estrelas ? '★' : '☆').join('');
+        const date  = new Date(a.criado_em).toLocaleDateString('pt-BR');
+        return `
+          <div class="avaliacao-item">
+            <div class="avaliacao-header">
+              <span class="avaliacao-autor">${a.usuario_nome}</span>
+              <span class="avaliacao-stars">${stars}</span>
+              <span class="avaliacao-date">${date}</span>
+            </div>
+            ${a.comentario ? `<div class="avaliacao-texto">${a.comentario}</div>` : ''}
+          </div>`;
+      }).join('');
+    }
+  } catch {
+    listEl.innerHTML = '<div style="color:var(--danger);font-size:.85rem">Erro ao carregar avaliações.</div>';
+  }
+}
+
+function renderRatingForm(produtoId) {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return `<div class="rating-login-prompt">
+      <a href="/login.html" class="btn btn-outline btn-sm">Entrar para avaliar</a>
+    </div>`;
+  }
+  return `
+    <div class="rating-form" id="ratingFormInner">
+      <p style="font-size:.85rem;font-weight:600;margin-bottom:8px">Sua avaliação:</p>
+      <div class="star-picker" id="starPicker">
+        ${[1,2,3,4,5].map(n => `
+          <button class="star-picker-btn" data-star="${n}"
+            onmouseover="hoverStar(${n})"
+            onmouseout="resetStarHover()"
+            onclick="selectStar(${n})">☆</button>`).join('')}
+      </div>
+      <textarea id="ratingComment" class="rating-comment" placeholder="Comentário opcional…" rows="2"></textarea>
+      <button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="submitRating(${produtoId})">Enviar avaliação</button>
+    </div>`;
+}
+
+function hoverStar(n) {
+  document.querySelectorAll('#starPicker .star-picker-btn').forEach((btn, i) => {
+    btn.textContent = i < n ? '★' : '☆';
+    btn.classList.toggle('filled', i < n);
+  });
+}
+
+function resetStarHover() {
+  document.querySelectorAll('#starPicker .star-picker-btn').forEach((btn, i) => {
+    btn.textContent = i < _selectedStar ? '★' : '☆';
+    btn.classList.toggle('filled', i < _selectedStar);
+  });
+}
+
+function selectStar(n) {
+  _selectedStar = n;
+  resetStarHover();
+}
+
+async function submitRating(produtoId) {
+  if (!_selectedStar) { showToast('Selecione de 1 a 5 estrelas.', 'error'); return; }
+  const comentario = document.getElementById('ratingComment')?.value.trim() || '';
+  try {
+    await API.post('/avaliacoes', { produto_id: produtoId, estrelas: _selectedStar, comentario });
+    showToast('Avaliação enviada! ⭐', 'success');
+    const updated = await API.get('/produtos');
+    allProducts   = updated;
+    renderProducts();
+    loadModalRatings(produtoId);
+  } catch (err) {
+    showToast(err.message || 'Erro ao enviar avaliação.', 'error');
+  }
 }

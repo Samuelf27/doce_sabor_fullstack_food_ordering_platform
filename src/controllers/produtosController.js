@@ -4,15 +4,18 @@ const listarProdutos = async (req, res) => {
   try {
     const { categoria, destaque } = req.query;
     let sql = `
-      SELECT p.*, c.nome AS categoria_nome, c.icone AS categoria_icone
+      SELECT p.*, c.nome AS categoria_nome, c.icone AS categoria_icone,
+             ROUND(AVG(a.estrelas), 1) AS media_estrelas,
+             COUNT(a.id)              AS total_avaliacoes
       FROM produtos p
       LEFT JOIN categorias c ON p.categoria_id = c.id
+      LEFT JOIN avaliacoes a ON a.produto_id = p.id
       WHERE p.disponivel = TRUE
     `;
     const params = [];
     if (categoria) { sql += ' AND p.categoria_id = ?'; params.push(categoria); }
     if (destaque === 'true') { sql += ' AND p.destaque = TRUE'; }
-    sql += ' ORDER BY p.destaque DESC, p.nome ASC';
+    sql += ' GROUP BY p.id ORDER BY p.destaque DESC, p.nome ASC';
 
     const [rows] = await db.query(sql, params);
     res.json(rows);

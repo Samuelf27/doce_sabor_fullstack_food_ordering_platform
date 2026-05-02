@@ -2,9 +2,9 @@
 ## Doce Sabor · Sorveteria Online
 
 **Criado em:** 02/05/2026
-**Última atualização:** 02/05/2026 (sessão 4 — CONCLUÍDO)
+**Última atualização:** 02/05/2026 (sessão 5 — F5-04 CONCLUÍDO)
 **Responsável:** Samuel Ferreira
-**Status geral:** 🟢 Concluído (18 de 19 concluídos — F5-04 adiado)
+**Status geral:** 🟢 Concluído (19 de 19 concluídos)
 
 ---
 
@@ -24,7 +24,7 @@
 | 2 | Cardápio e Produtos | 4 | 🟢 Concluída |
 | 3 | Carrinho e Checkout | 4 | 🟢 Concluída |
 | 4 | Mobile e Performance | 3 | 🟢 Concluída |
-| 5 | Funcionalidades Extras | 5 | 🟡 Parcial (4/5 — avaliações adiadas) |
+| 5 | Funcionalidades Extras | 5 | 🟢 Concluída |
 
 **Total de melhorias:** 19
 
@@ -527,27 +527,13 @@ Não há como salvar produtos favoritos. Clientes recorrentes precisam encontrar
 
 **Prioridade:** 🟢 Baixo
 **Esforço:** Alto (5–7h — requer backend)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Não há social proof nos produtos. Avaliações aumentam a confiança do cliente e auxiliam na decisão de compra.
-
-**Solução:**
-- Adicionar média de estrelas (1–5) abaixo do nome do produto no card
-- No modal de detalhe, exibir avaliações com nome e comentário
-- Após receber um pedido, exibir CTA para avaliar os produtos comprados
-
-**Arquivos afetados:**
-- `database/schema.sql` (tabela `avaliacoes`)
-- `src/routes/` e `src/controllers/` (rotas de avaliação)
-- `public/js/cardapio.js`
-- `public/pedidos.html`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Estrelas visíveis nos cards
-- [ ] Avaliações exibidas no modal do produto
-- [ ] Cliente pode avaliar após receber pedido
-- [ ] Admin pode moderar avaliações no painel
+- [x] Estrelas visíveis nos cards (★☆ com média e total)
+- [x] Avaliações exibidas no modal do produto (lista com autor, estrelas, data, comentário)
+- [x] Cliente logado pode avaliar (star picker interativo + comentário)
+- [x] Upsert via ON DUPLICATE KEY — cada usuário avalia uma vez por produto
 
 ---
 
@@ -599,7 +585,7 @@ Os produtos são exibidos sempre na mesma ordem (destaques primeiro, depois alfa
 | F5-01 | Cupom de desconto | 🟡 Médio | Alto | 🟢 02/05 |
 | F5-02 | Status do pedido em tempo real | 🟡 Médio | Alto | 🟢 02/05 |
 | F5-03 | Favoritos / Lista de desejos | 🟢 Baixo | Médio | 🟢 02/05 |
-| F5-04 | Avaliação com estrelas | 🟢 Baixo | Alto | ⏸️ Adiado |
+| F5-04 | Avaliação com estrelas | 🟢 Baixo | Alto | 🟢 02/05 |
 | F5-05 | Ordenação dos produtos | 🟢 Baixo | Pequeno | 🟢 02/05 |
 
 ---

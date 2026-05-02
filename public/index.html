@@ -149,8 +149,21 @@
     </div>
     <p id="modalDesc" style="color:var(--gray);font-size:.9rem;line-height:1.7;margin-bottom:22px"></p>
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding-top:16px;border-top:1px solid var(--gray-lighter)">
-      <div style="font-size:1.6rem;font-weight:800;color:var(--primary)" id="modalPrice">—</div>
+      <div>
+        <div style="font-size:1.6rem;font-weight:800;color:var(--primary)" id="modalPrice">—</div>
+        <div id="modalStars"></div>
+      </div>
       <div id="modalAction"></div>
+    </div>
+
+    <!-- AVALIAÇÕES -->
+    <div id="modalRatings" style="margin-top:22px;padding-top:18px;border-top:1px solid var(--gray-lighter)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <h4 style="font-size:.95rem;margin:0">Avaliações</h4>
+        <div id="modalRatingStats" style="font-size:.8rem;color:var(--gray)"></div>
+      </div>
+      <div id="modalRatingForm"></div>
+      <div id="modalRatingsList"></div>
     </div>
   </div>
 </div>
