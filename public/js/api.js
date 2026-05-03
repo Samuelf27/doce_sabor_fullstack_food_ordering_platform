@@ -24,6 +24,7 @@ const API = (() => {
     get:    (ep)       => request('GET',    ep),
     post:   (ep, body) => request('POST',   ep, body),
     put:    (ep, body) => request('PUT',    ep, body),
+    patch:  (ep, body) => request('PATCH',  ep, body),
     delete: (ep)       => request('DELETE', ep)
   };
 })();

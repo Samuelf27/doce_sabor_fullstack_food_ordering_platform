@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Cupons — Admin Doce Sabor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container navbar-inner">
+    <a href="/" class="navbar-logo"><span class="logo-icon">🍦</span> Doce Sabor</a>
+    <div class="navbar-actions">
+      <span style="font-size:.85rem;color:var(--gray)">🔑 Admin: <strong id="userName"></strong></span>
+      <button class="btn btn-outline btn-sm" id="logoutBtn">Sair</button>
+    </div>
+  </div>
+</nav>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-top">
+      <h2>⚙️ Painel Admin</h2>
+      <p>Gerencie sua sorveteria</p>
+    </div>
+    <a href="/admin/index.html"    class="admin-nav-item"><span class="icon">📊</span> Dashboard</a>
+    <a href="/admin/produtos.html" class="admin-nav-item"><span class="icon">🍨</span> Produtos</a>
+    <a href="/admin/pedidos.html"  class="admin-nav-item"><span class="icon">📦</span> Pedidos</a>
+    <a href="/admin/cupons.html"   class="admin-nav-item active"><span class="icon">🎟️</span> Cupons</a>
+    <a href="/"                    class="admin-nav-item"><span class="icon">🌐</span> Ver Site</a>
+  </aside>
+
+  <main class="admin-content">
+    <div class="admin-header" style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h1>🎟️ Cupons de Desconto</h1>
+        <p>Crie e gerencie cupons para seus clientes</p>
+      </div>
+      <button class="btn btn-primary" onclick="openCreateCupomModal()">+ Novo Cupom</button>
+    </div>
+
+    <div class="table-wrapper">
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Tipo</th>
+              <th>Desconto</th>
+              <th>Validade</th>
+              <th>Usos</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="cuponsTbody">
+            <tr><td colspan="7" style="text-align:center;padding:40px"><div class="spinner" style="margin:0 auto"></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL CUPOM -->
+<div class="modal-overlay" id="cupomModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="cupomModalTitle">Novo Cupom</h3>
+      <button class="modal-close" onclick="closeModal('cupomModal')">✕</button>
+    </div>
+    <form id="cupomForm">
+      <input type="hidden" id="cupomId">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Código *</label>
+          <input type="text" id="cCodigo" class="form-control" placeholder="ex: VERAO20" required
+            style="text-transform:uppercase" oninput="this.value=this.value.toUpperCase()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo *</label>
+          <select id="cTipo" class="form-control" onchange="updateValorLabel()">
+            <option value="percentual">Percentual (%)</option>
+            <option value="fixo">Valor fixo (R$)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" id="valorLabel">Desconto (%) *</label>
+          <input type="number" id="cValor" class="form-control" step="0.01" min="0.01" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Validade</label>
+          <input type="date" id="cValidade" class="form-control">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Limite de usos</label>
+          <input type="number" id="cUsoMaximo" class="form-control" min="1" placeholder="Ilimitado">
+        </div>
+        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:4px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" id="cAtivo" checked style="width:16px;height:16px">
+            <span class="form-label" style="margin:0">Ativo</span>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Salvar Cupom</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
