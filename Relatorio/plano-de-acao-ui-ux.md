@@ -400,25 +400,13 @@ O frete de R$ 5,00 é cobrado sem nenhuma explicação. O cliente não sabe se e
 
 **Prioridade:** 🟢 Baixo
 **Esforço:** Médio (2–3h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Não há como salvar produtos favoritos. Clientes recorrentes precisam encontrar os mesmos produtos toda vez do zero.
-
-**Solução:**
-- Ícone de coração `♡` em cada card de produto
-- Salvar favoritos no `localStorage` (sem necessidade de login)
-- Aba "Favoritos" no cardápio filtra apenas os produtos curtidos
-
-**Arquivos afetados:**
-- `public/js/cardapio.js`
-- `public/css/style.css`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Ícone de coração no card
-- [ ] Clique adiciona/remove dos favoritos
-- [ ] Aba "Favoritos" funciona no filtro de categorias
-- [ ] Persiste após recarregar a página
+- [x] Ícone de coração no card (❤️ / 🤍)
+- [x] Clique adiciona/remove dos favoritos (localStorage `'favoritos'`)
+- [x] Aba "Favoritos" funciona no filtro de categorias
+- [x] Persiste após recarregar a página
 
 ---
 
@@ -440,24 +428,13 @@ Não há como salvar produtos favoritos. Clientes recorrentes precisam encontrar
 
 **Prioridade:** 🟢 Baixo
 **Esforço:** Pequeno (1h)
-**Status:** 🔴 Não iniciado
-
-**Problema:**
-Os produtos são exibidos sempre na mesma ordem (destaques primeiro, depois alfabético). Não há controle do cliente sobre a ordenação.
-
-**Solução:**
-- Adicionar dropdown "Ordenar por" ao lado das abas de categoria
-- Opções: Relevância (padrão), Menor preço, Maior preço, Nome A→Z
-
-**Arquivos afetados:**
-- `public/index.html`
-- `public/js/cardapio.js`
-- `public/css/style.css`
+**Status:** 🟢 Concluído — 02/05/2026
 
 **Critério de conclusão:**
-- [ ] Dropdown visível e estilizado
-- [ ] Ordenação aplicada em tempo real
-- [ ] Mantém o filtro de categoria ativo ao ordenar
+- [x] Dropdown visível e estilizado ao lado das abas de categoria
+- [x] 4 opções: Relevância, Menor preço, Maior preço, A → Z
+- [x] Ordenação aplicada em tempo real
+- [x] Mantém o filtro de categoria ativo ao ordenar
 
 ---
 
