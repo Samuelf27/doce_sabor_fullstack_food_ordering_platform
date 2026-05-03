@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const page = window.location.pathname;
   if (page.includes('index'))   loadDashboard();
   if (page.includes('produto')) loadAdminProdutos();
-  if (page.includes('pedido'))  loadAdminPedidos();
+  if (page.includes('pedido'))  { loadAdminPedidos(); startPedidosPolling(); }
+  if (page.includes('cupom'))   loadAdminCupons();
 });
 
 /* ─── Dashboard ─────────────────────────────── */
@@ -150,6 +151,116 @@ async function updateStatus(id, status) {
   try {
     await API.put(`/admin/pedidos/${id}/status`, { status });
     showToast('Status atualizado!', 'success');
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+let _pedidosPollingTimer = null;
+function startPedidosPolling() {
+  _pedidosPollingTimer = setInterval(loadAdminPedidos, 30000);
+  window.addEventListener('beforeunload', () => clearInterval(_pedidosPollingTimer));
+}
+
+/* ─── Cupons Admin ──────────────────────────── */
+
+async function loadAdminCupons() {
+  try {
+    const cupons = await API.get('/admin/cupons');
+    const tbody  = document.getElementById('cuponsTbody');
+    if (!tbody) return;
+
+    if (!cupons.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--gray)">Nenhum cupom cadastrado ainda.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = cupons.map(c => {
+      const desconto  = c.tipo === 'percentual' ? `${c.valor}%` : formatCurrency(c.valor);
+      const validade  = c.validade ? new Date(c.validade).toLocaleDateString('pt-BR') : 'Sem validade';
+      const usos      = c.uso_maximo ? `${c.uso_atual}/${c.uso_maximo}` : `${c.uso_atual} (ilimitado)`;
+      const statusBadge = c.ativo
+        ? '<span class="badge badge-success">Ativo</span>'
+        : '<span class="badge badge-danger">Inativo</span>';
+      return `<tr>
+        <td><strong style="font-family:monospace;font-size:.95rem">${c.codigo}</strong></td>
+        <td>${c.tipo === 'percentual' ? '📊 Percentual' : '💵 Valor fixo'}</td>
+        <td><strong>${desconto}</strong></td>
+        <td>${validade}</td>
+        <td>${usos}</td>
+        <td>${statusBadge}</td>
+        <td>
+          <button class="btn btn-sm btn-outline" onclick='openEditCupomModal(${JSON.stringify(c)})'>✏️</button>
+          <button class="btn btn-sm ${c.ativo ? 'btn-warning' : 'btn-success'}" onclick="toggleCupom(${c.id},${c.ativo})">
+            ${c.ativo ? '⏸️' : '▶️'}
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteCupom(${c.id},'${c.codigo}')">🗑️</button>
+        </td>
+      </tr>`;
+    }).join('');
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+function openCreateCupomModal() {
+  document.getElementById('cupomModalTitle').textContent = 'Novo Cupom';
+  document.getElementById('cupomForm').reset();
+  document.getElementById('cupomId').value = '';
+  document.getElementById('cAtivo').checked = true;
+  updateValorLabel();
+  openModal('cupomModal');
+}
+
+function openEditCupomModal(c) {
+  document.getElementById('cupomModalTitle').textContent = 'Editar Cupom';
+  document.getElementById('cupomId').value    = c.id;
+  document.getElementById('cCodigo').value    = c.codigo;
+  document.getElementById('cTipo').value      = c.tipo;
+  document.getElementById('cValor').value     = c.valor;
+  document.getElementById('cValidade').value  = c.validade ? c.validade.split('T')[0] : '';
+  document.getElementById('cUsoMaximo').value = c.uso_maximo || '';
+  document.getElementById('cAtivo').checked   = !!c.ativo;
+  updateValorLabel();
+  openModal('cupomModal');
+}
+
+function updateValorLabel() {
+  const tipo = document.getElementById('cTipo')?.value;
+  const label = document.getElementById('valorLabel');
+  if (label) label.textContent = tipo === 'percentual' ? 'Desconto (%) *' : 'Valor (R$) *';
+}
+
+document.getElementById('cupomForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const id = document.getElementById('cupomId').value;
+  const body = {
+    codigo:     document.getElementById('cCodigo').value,
+    tipo:       document.getElementById('cTipo').value,
+    valor:      parseFloat(document.getElementById('cValor').value),
+    validade:   document.getElementById('cValidade').value || null,
+    uso_maximo: parseInt(document.getElementById('cUsoMaximo').value) || null,
+    ativo:      document.getElementById('cAtivo').checked
+  };
+  try {
+    if (id) await API.put(`/admin/cupons/${id}`, body);
+    else    await API.post('/admin/cupons', body);
+    showToast(id ? 'Cupom atualizado!' : 'Cupom criado!', 'success');
+    closeModal('cupomModal');
+    loadAdminCupons();
+  } catch (err) { showToast(err.message, 'error'); }
+});
+
+async function toggleCupom(id, ativo) {
+  try {
+    await API.patch(`/admin/cupons/${id}/toggle`);  // needs PATCH support in API
+    showToast(ativo ? 'Cupom desativado.' : 'Cupom ativado!', 'success');
+    loadAdminCupons();
+  } catch (e) { showToast(e.message, 'error'); }
+}
+
+async function deleteCupom(id, codigo) {
+  if (!confirm(`Deletar o cupom "${codigo}"?`)) return;
+  try {
+    await API.delete(`/admin/cupons/${id}`);
+    showToast('Cupom removido!', 'success');
+    loadAdminCupons();
   } catch (e) { showToast(e.message, 'error'); }
 }
 
